@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Bootstrap CDN-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <!-- Firebase Reference -->
+    <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+    
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header text-center">
+              <h1>Employee Data Management</h1>
+              <p>a comprehensive Directory of Employee Billable Hours</p>
+            </div>
+            <div class="card-body">
+                <p>Current Employees</p>
+                <tr></tr>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Employee Name</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">Months Worked</th>
+                        <th scope="col">Monthly Rate</th>
+                        <th scope="col">Total Billed</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Employee Name</label>
+                            <input type="text" class="form-control" id="nameInput" aria-describedby="emailHelp" placeholder="Name"> 
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Role</label>
+                            <input type="text" class="form-control" id="roleInput" placeholder="Role">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Start Date</label>
+                            <input type="date" class="form-control" id="startInput" placeholder="MM/DD/YYYY">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Monthly Rate</label>
+                            <input type="number" class="form-control" id="rateInput" placeholder="Monthly rate">
+                        </div>
+                        <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    <script>
+      // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyABlxyCgOLfIIEx1YXA4m6SNZO9CywM72U",
+        authDomain: "employeedatamgmt-d43d9.firebaseapp.com",
+        databaseURL: "https://employeedatamgmt-d43d9.firebaseio.com",
+        projectId: "employeedatamgmt-d43d9",
+        storageBucket: "employeedatamgmt-d43d9.appspot.com",
+        messagingSenderId: "344999086841"
+    };
+    
+    firebase.initializeApp(config);
+
+    database = firebase.database();
+    
+    $("#submit").on("click", function(event){
+        event.preventDefault();
+        var name = $("#nameInput").val().trim();
+        var role = $("#roleInput").val().trim();
+        var date = $("#startInput").val().trim();
+        var rate = $("#rateInput").val().trim();
+
+        mw = 0;
+        tb = 12;
+        $("tbody").append("<tr><td>"+name+"</td><td>"+role+"</td><td>"+date+"</td><td>"+mw+"</td><td>"+rate+"</td><td>"+tb+"</td>")
+        // $("#name").append("<td>"+name+"</td>");
+        // $("#role").append("<td>"+role+"</td>");
+        // $("#startDate").append("<td>"+date+"</td>");
+        // $("#monthlyRate").append("<td>"+rate+"</td>");
+
+        var newEmployee = {
+            name: name,
+            role: role,
+            date: date,
+            rate: rate
+        }
+
+        database.ref().push(newEmployee);
+
+        console.log(newEmployee.name);
+        console.log(newEmployee.role);
+        console.log(newEmployee.date);
+        console.log(newEmployee.rate);
+    });
+
+
+
+    
+
+    </script>
+</body>
+</html>
