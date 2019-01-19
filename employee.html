@@ -116,13 +116,25 @@
     var date = newRecord.date;
     var rate = newRecord.rate
 
+    var month = newRecord.date;
+
+    // Year of today (2019).
     var d = new Date();
     var y = d.getFullYear();
+    
 
+    // year of my employee started
     date = new Date(date); 
     date = date.getFullYear();
+
+    // Month of employee
+    var month = new Date(month);
+    month = month.getMonth();
+    
+    // calculat handsome
     var mw = y - date;
     mw = mw * 12;
+    mw = mw - month;
     tb = mw * rate; 
 
     console.log(newRecord.name);
