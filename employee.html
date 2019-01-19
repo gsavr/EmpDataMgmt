@@ -82,21 +82,15 @@
 
     database = firebase.database();
     
+    
+
     $("#submit").on("click", function(event){
         event.preventDefault();
         var name = $("#nameInput").val().trim();
         var role = $("#roleInput").val().trim();
         var date = $("#startInput").val().trim();
         var rate = $("#rateInput").val().trim();
-
-        mw = 0;
-        tb = 12;
-        $("tbody").append("<tr><td>"+name+"</td><td>"+role+"</td><td>"+date+"</td><td>"+mw+"</td><td>"+rate+"</td><td>"+tb+"</td>")
-        // $("#name").append("<td>"+name+"</td>");
-        // $("#role").append("<td>"+role+"</td>");
-        // $("#startDate").append("<td>"+date+"</td>");
-        // $("#monthlyRate").append("<td>"+rate+"</td>");
-
+        
         var newEmployee = {
             name: name,
             role: role,
@@ -112,9 +106,29 @@
         console.log(newEmployee.rate);
     });
 
-
-
+    database.ref().on("child_added", function(childSnapshot) {
+         
+        
     
+    console.log(childSnapshot.val());
+    
+    var newRecord=childSnapshot.val();
+    var date = newRecord.date;
+    var rate = newRecord.rate
+
+    var d = new Date();
+    var y = d.getFullYear();
+
+    date = new Date(date); 
+    date = date.getFullYear();
+    var mw = y - date;
+    mw = mw * 12;
+    tb = mw * rate; 
+
+    console.log(newRecord.name);
+    $("tbody").append("<tr><td>"+newRecord.name+"</td><td>"+newRecord.role+"</td><td>"+newRecord.date+"</td><td>"+mw+"</td><td>"+newRecord.rate+"</td><td>"+tb+"</td>")
+
+    });
 
     </script>
 </body>
